@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aju.Carefree", "Aju.Carefree\Aju.Carefree.csproj", "{FF53A2F5-7AEF-4E18-B739-C1B49B6519A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aju.Carefree.ExcelUtils", "Aju.Carefree.ExcelUtils\Aju.Carefree.ExcelUtils.csproj", "{87506A8D-A992-47CD-8ADD-835C5637744B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF53A2F5-7AEF-4E18-B739-C1B49B6519A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF53A2F5-7AEF-4E18-B739-C1B49B6519A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF53A2F5-7AEF-4E18-B739-C1B49B6519A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF53A2F5-7AEF-4E18-B739-C1B49B6519A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87506A8D-A992-47CD-8ADD-835C5637744B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87506A8D-A992-47CD-8ADD-835C5637744B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87506A8D-A992-47CD-8ADD-835C5637744B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87506A8D-A992-47CD-8ADD-835C5637744B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF777720-86D7-4079-B9B7-B1B50DEB4287}
+	EndGlobalSection
+EndGlobal
