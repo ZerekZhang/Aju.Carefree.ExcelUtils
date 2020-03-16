@@ -20,11 +20,12 @@ namespace Aju.Carefree.ExcelUtils
         /// <param name="filePath">excel保持路径</param>
         /// <param name="sheetName">sheet 名称</param>
         /// <param name="listData">数据</param>
-        /// <param name="func">表头自定义，如果为空，则自动生成表头，复杂表头请自定义
+        /// <param name="excelHader">表头自定义，如果为空，则自动生成表头，复杂表头请自定义
         /// <para>int：表格内容从第几行开始</para>  
         /// </param>
+        /// <param name="excelStyle">excel 样式</param>
         public static void CreateExcelByList<T>(string filePath, string sheetName, List<T> listData,
-            Func<ExcelWorksheet, (ExcelWorksheet, int)> func = null) where T : class
+            Func<ExcelWorksheet, (ExcelWorksheet, int)> excelHader = null,Func<ExcelWorksheet,ExcelWorksheet>excelStyle=null) where T : class
         {
             Type t = typeof(T);
             if (string.IsNullOrEmpty(filePath)) throw new NullReferenceException($"参数{nameof(filePath)}不能为空.");
@@ -39,7 +40,7 @@ namespace Aju.Carefree.ExcelUtils
                 ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(sheetName);
                 //表头
                 int row = 1;
-                if (func == null)
+                if (excelHader== null)
                 {
                     t.GetProperties().ToList().ForEach((n) =>
                     {
@@ -51,10 +52,9 @@ namespace Aju.Carefree.ExcelUtils
                     });
                 }
                 else
-                    (worksheet, row) = func.Invoke(worksheet);
+                    (worksheet, row) = excelHader.Invoke(worksheet);
                 foreach (var item in listData)
                 {
-                    int j = 0;
                     foreach (var p in t.GetProperties())
                     {
                         if (p.IsDefined(typeof(ExcelColumnAttribute), true))
@@ -63,13 +63,16 @@ namespace Aju.Carefree.ExcelUtils
                             if (attribute != null)
                             {
                                 var value = p.GetValue(item);
-                                worksheet.Cells[row + 1, attribute.Column].Value = p.GetValue(item).ToString();
-                                j++;
+  if (value != null && !string.IsNullOrEmpty(value.ToString())){
+                                worksheet.Cells[row + 1, attribute.Column].Value = value.ToString();
+}
                             }
                         }
                     }
                     row++;
                 }
+  if (excelStyle != null)
+                    worksheet = excelStyle.Invoke(worksheet);
                 package.Save();
             }
 
