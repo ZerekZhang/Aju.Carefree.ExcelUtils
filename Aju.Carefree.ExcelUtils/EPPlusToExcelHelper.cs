@@ -25,7 +25,7 @@ namespace Aju.Carefree.ExcelUtils
         /// </param>
         /// <param name="excelStyle">excel 样式</param>
         public static void CreateExcelByList<T>(string filePath, string sheetName, List<T> listData,
-            Func<ExcelWorksheet, (ExcelWorksheet, int)> excelHader = null,Func<ExcelWorksheet,ExcelWorksheet>excelStyle=null) where T : class
+            Func<ExcelWorksheet, (ExcelWorksheet, int)> excelHader = null, Func<ExcelWorksheet, ExcelWorksheet> excelStyle = null) where T : class
         {
             Type t = typeof(T);
             if (string.IsNullOrEmpty(filePath)) throw new NullReferenceException($"参数{nameof(filePath)}不能为空.");
@@ -34,13 +34,14 @@ namespace Aju.Carefree.ExcelUtils
             if (File.Exists(filePath))
                 File.Delete(filePath);
             FileInfo newfile = new FileInfo(filePath);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (ExcelPackage package = new ExcelPackage(newfile))
             {
                 //在工作簿中获得第一个工作表
                 ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(sheetName);
                 //表头
                 int row = 1;
-                if (excelHader== null)
+                if (excelHader == null)
                 {
                     t.GetProperties().ToList().ForEach((n) =>
                     {
@@ -63,45 +64,19 @@ namespace Aju.Carefree.ExcelUtils
                             if (attribute != null)
                             {
                                 var value = p.GetValue(item);
-  if (value != null && !string.IsNullOrEmpty(value.ToString())){
-                                worksheet.Cells[row + 1, attribute.Column].Value = value.ToString();
-}
+                                if (value != null && !string.IsNullOrEmpty(value.ToString()))
+                                {
+                                    worksheet.Cells[row + 1, attribute.Column].Value = value.ToString();
+                                }
                             }
                         }
                     }
                     row++;
                 }
-  if (excelStyle != null)
+                if (excelStyle != null)
                     worksheet = excelStyle.Invoke(worksheet);
                 package.Save();
             }
-
-        }
-    }
-
-    /// <summary>
-    /// Excel 列
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public class ExcelColumnAttribute : Attribute
-    {
-        /// <summary>
-        /// 标题
-        /// </summary>
-        public string Name { get; set; }
-        /// <summary>
-        ///  Excel 列数
-        /// </summary>
-        public int Column { get; set; }
-
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="column">列数 第几列 </param>
-        public ExcelColumnAttribute(int column, string name)
-        {
-            Column = column;
-            Name = name;
         }
     }
 }

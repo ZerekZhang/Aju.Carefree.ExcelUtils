@@ -1,13 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;netcoreapp3.0;netcoreapp2.2;netcoreapp2.1</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Description>使用 EPPlus 生成 Excel 帮助类</Description>
+    <Description>使用 EPPlus 生成 Excel 帮助类,如有不合适的地方，请及时到 GitHub 上 提交Issues</Description>
+    <Version>1.0.2</Version>
+    <PackageProjectUrl>https://github.com/AjuPrince/Aju.Carefree.ExcelUtils.git</PackageProjectUrl>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="EPPlus" Version="4.5.2" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp3.1|AnyCPU'">
+    <DocumentationFile>D:\Code\Aju.Carefree.Utils\Aju.Carefree.ExcelUtils\Aju.Carefree.ExcelUtils\Aju.Carefree.ExcelUtils.xml</DocumentationFile>
+  </PropertyGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.1' OR '$(TargetFramework)'=='netcoreapp2.2'">
+    <PackageReference Include="EPPlus" Version="5.0.3" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.0'  OR '$(TargetFramework)'=='netcoreapp3.1'">
+    <PackageReference Include="EPPlus" Version="5.0.4" />
+  </ItemGroup>
 </Project>
